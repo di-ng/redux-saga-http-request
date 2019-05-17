@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { HttpResponse } from '../types/response';
 
 export class HttpRequest {
   public static create(
@@ -13,10 +14,13 @@ export class HttpRequest {
     private config: AxiosRequestConfig,
   ) {}
 
-  public async request<TResponseData>() {
-    const response = await this.axiosInstance.request<TResponseData>();
+  public async request<TResponseData>(): Promise<HttpResponse<TResponseData>> {
+    const { axiosInstance, config } = this;
+    const response = (await axiosInstance.request<TResponseData>(
+      config,
+    )) as HttpResponse<TResponseData>;
     const { status } = response;
-    response.ok = status >= 200 && status < 300;
+    response.ok = status >= 200 && status < 400;
     return response;
   }
 

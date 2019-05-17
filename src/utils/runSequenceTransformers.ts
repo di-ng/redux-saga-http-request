@@ -1,5 +1,5 @@
 import { Sequence } from 'types/sequence';
-import { SequenceTransformersMap } from 'types/sequenceTransformers';
+import { SequenceTransformersMap } from '../types/sequenceTransformers';
 
 export function runSequenceTransformers(
   sequence: Sequence,
@@ -8,10 +8,9 @@ export function runSequenceTransformers(
   state,
   response,
 ) {
-  const {
-    dispatch,
-    ...nonDispatchSequenceTransformers
-  } = sequenceTransformers[sequence];
+  const { dispatch, ...nonDispatchSequenceTransformers } = sequenceTransformers[
+    sequence
+  ];
 
   const transformerArgs = sequence
     ? [response, state, action]
@@ -20,19 +19,18 @@ export function runSequenceTransformers(
   const shouldDispatch = !!dispatch(...transformerArgs);
   const result = {
     shouldDispatch,
-    transformedAction: action
+    transformedAction: action,
   };
 
   if (shouldDispatch) {
-    result.transformedAction = 
-      Object
-        .keys(nonDispatchSequenceTransformers)
-        .reduce((transformedAction, transformerKey) => {
-          const transformer = nonDispatchSequenceTransformers[transformerKey];
-          transformedAction[transformerKey] = transformer(...transformerArgs);
-          return transformedAction;
-        }, action);
+    result.transformedAction = Object.keys(
+      nonDispatchSequenceTransformers,
+    ).reduce((transformedAction, transformerKey) => {
+      const transformer = nonDispatchSequenceTransformers[transformerKey];
+      transformedAction[transformerKey] = transformer(...transformerArgs);
+      return transformedAction;
+    }, action);
   }
 
   return result;
-};
+}
