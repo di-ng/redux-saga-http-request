@@ -1,6 +1,6 @@
 import { AnyAction } from 'redux';
 import { DeepRequired } from 'utility-types';
-import { HttpResponse } from './response';
+import { HttpResponse } from './httpResponse';
 
 export type SequenceTransformerSequence = 'start' | 'failure' | 'success';
 

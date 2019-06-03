@@ -4,7 +4,7 @@ import { runSequenceTransformers } from '../utils/runSequenceTransformers';
 import { SagaIterator } from '@redux-saga/core';
 import { addSequenceToAction } from '../utils/addSequenceToAction';
 import { HttpRequest } from '../models/HttpRequest';
-import { HttpResponse } from '../types/response';
+import { HttpResponse } from '../types/httpResponse';
 import { AxiosInstance } from 'axios';
 import { normalizeSequenceTransformers } from '../utils/normalizeSequenceTransformers';
 import { normalizeHttpRequestConfig } from '../utils/normalizeHttpRequestConfig';

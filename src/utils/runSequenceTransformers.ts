@@ -1,6 +1,6 @@
 import { SequenceTransformerSequence } from '../types/sequenceTransformers';
 import { keys } from './objectKeys';
-import { HttpResponse } from '../types/response';
+import { HttpResponse } from '../types/httpResponse';
 
 export function runSequenceTransformers(
   sequence: SequenceTransformerSequence,

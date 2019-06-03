@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { HttpResponse } from '../types/response';
+import { HttpResponse } from '../types/httpResponse';
 
 export class HttpRequest {
   public static create(
