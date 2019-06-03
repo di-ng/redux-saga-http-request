@@ -1,12 +1,16 @@
-import { SequenceTransformerSequence } from '../types/sequenceTransformers';
+import {
+  SequenceTransformerSequence,
+  NormalizedSequenceTransformersMap,
+} from '../types/sequenceTransformers';
 import { keys } from './objectKeys';
 import { HttpResponse } from '../types/httpResponse';
+import { AnyAction } from 'redux';
 
-export function runSequenceTransformers(
+export function runSequenceTransformers<TState = any>(
   sequence: SequenceTransformerSequence,
-  sequenceTransformers,
-  action,
-  state,
+  sequenceTransformers: NormalizedSequenceTransformersMap,
+  action: AnyAction,
+  state: TState,
   response?: HttpResponse,
 ) {
   const { dispatch, ...nonDispatchSequenceTransformers } = sequenceTransformers[
@@ -17,7 +21,7 @@ export function runSequenceTransformers(
     ? [response, state, action]
     : [state, action];
 
-  const shouldDispatch = !!dispatch(...transformerArgs);
+  const shouldDispatch = !!(dispatch as any)(...transformerArgs);
   const result = {
     shouldDispatch,
     transformedAction: action,
@@ -26,7 +30,9 @@ export function runSequenceTransformers(
   if (shouldDispatch) {
     result.transformedAction = keys(nonDispatchSequenceTransformers).reduce(
       (transformedAction, transformerKey) => {
-        const transformer = nonDispatchSequenceTransformers[transformerKey];
+        const transformer = nonDispatchSequenceTransformers[
+          transformerKey
+        ] as any;
         transformedAction[transformerKey] = transformer(...transformerArgs);
         return transformedAction;
       },
