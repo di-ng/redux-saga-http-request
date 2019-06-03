@@ -14,7 +14,7 @@ export class HttpRequest {
     private config: AxiosRequestConfig,
   ) {}
 
-  public async request<TResponseData>(): Promise<HttpResponse<TResponseData>> {
+  public async send<TResponseData>(): Promise<HttpResponse<TResponseData>> {
     const { axiosInstance, config } = this;
     const response = (await axiosInstance.request<TResponseData>(
       config,

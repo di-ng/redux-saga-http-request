@@ -1,38 +1,16 @@
 {
-  "extends": [
-    "tslint:latest",
-    "tslint-config-prettier"
-  ],
+  "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
-    "align": [
-      true,
-      "parameters",
-      "statements"
-    ],
-    "array-type": [
-      true,
-      "array"
-    ],
+    "align": [true, "parameters", "statements"],
+    "array-type": [true, "array"],
     "class-name": true,
-    "comment-format": [
-      true,
-      "check-space"
-    ],
+    "comment-format": [true, "check-space"],
     "curly": true,
     "eofline": true,
-    "indent": [
-      true,
-      "spaces"
-    ],
-    "interface-name": [
-      true,
-      "never-prefix"
-    ],
+    "indent": [true, "spaces"],
+    "interface-name": [true, "never-prefix"],
     "jsdoc-format": true,
-    "max-line-length": [
-      true,
-      120
-    ],
+    "max-line-length": [true, 120],
     "member-access": true,
     "member-ordering": [
       true,
@@ -56,19 +34,11 @@
     ],
     "new-parens": true,
     "no-conditional-assignment": false,
-    "no-console": [
-      true,
-      "log",
-      "warn",
-      "error"
-    ],
+    "no-console": [true, "log", "warn", "error"],
     "no-debugger": true,
     "no-duplicate-variable": true,
     "no-eval": true,
-    "no-implicit-dependencies": [
-      true,
-      "dev"
-    ],
+    "no-implicit-dependencies": [true, "dev"],
     "no-internal-module": true,
     "no-shadowed-variable": true,
     "no-submodule-imports": false,
@@ -85,23 +55,10 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "one-variable-per-declaration": [
-      true
-    ],
-    "ordered-imports": [
-      true
-    ],
-    "quotemark": [
-      true,
-      "single",
-      "jsx-double",
-      "avoid-escape"
-    ],
-    "semicolon": [
-      true,
-      "always",
-      "ignore-bound-class-methods"
-    ],
+    "one-variable-per-declaration": [true],
+    "ordered-imports": [true],
+    "quotemark": [true, "single", "jsx-double", "avoid-escape"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
     "trailing-comma": [
       true,
       {
@@ -109,10 +66,7 @@
         "singleline": "never"
       }
     ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
+    "triple-equals": [true, "allow-null-check"],
     "typedef": [
       true,
       "call-signature",

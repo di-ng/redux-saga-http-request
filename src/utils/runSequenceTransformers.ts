@@ -1,12 +1,13 @@
-import { Sequence } from 'types/sequence';
-import { SequenceTransformersMap } from '../types/sequenceTransformers';
+import { SequenceTransformerSequence } from '../types/sequenceTransformers';
+import { keys } from './objectKeys';
+import { HttpResponse } from '../types/response';
 
 export function runSequenceTransformers(
-  sequence: Sequence,
-  sequenceTransformers: SequenceTransformersMap,
+  sequence: SequenceTransformerSequence,
+  sequenceTransformers,
   action,
   state,
-  response,
+  response?: HttpResponse,
 ) {
   const { dispatch, ...nonDispatchSequenceTransformers } = sequenceTransformers[
     sequence
@@ -23,13 +24,14 @@ export function runSequenceTransformers(
   };
 
   if (shouldDispatch) {
-    result.transformedAction = Object.keys(
-      nonDispatchSequenceTransformers,
-    ).reduce((transformedAction, transformerKey) => {
-      const transformer = nonDispatchSequenceTransformers[transformerKey];
-      transformedAction[transformerKey] = transformer(...transformerArgs);
-      return transformedAction;
-    }, action);
+    result.transformedAction = keys(nonDispatchSequenceTransformers).reduce(
+      (transformedAction, transformerKey) => {
+        const transformer = nonDispatchSequenceTransformers[transformerKey];
+        transformedAction[transformerKey] = transformer(...transformerArgs);
+        return transformedAction;
+      },
+      action,
+    );
   }
 
   return result;

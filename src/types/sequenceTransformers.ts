@@ -1,4 +1,6 @@
 import { AnyAction } from 'redux';
+import { DeepRequired } from 'utility-types';
+import { HttpResponse } from './response';
 
 export type SequenceTransformerSequence = 'start' | 'failure' | 'success';
 
@@ -9,7 +11,7 @@ export type StartSequenceTransformer<
 > = (state: TState, action: TAction) => TResult;
 
 export type DoneSequenceTransformer<
-  TResponse = any,
+  TResponse = HttpResponse,
   TState = any,
   TAction = AnyAction,
   TResult = any
@@ -33,3 +35,7 @@ export interface SequenceTransformersMap {
   failure?: DoneSequenceTransformersMap;
   success?: DoneSequenceTransformersMap;
 }
+
+export type NormalizedSequenceTransformersMap = DeepRequired<
+  SequenceTransformersMap
+>;
