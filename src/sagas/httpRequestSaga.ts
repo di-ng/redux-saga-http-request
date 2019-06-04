@@ -5,14 +5,16 @@ import { SagaIterator } from '@redux-saga/core';
 import { addSequenceToAction } from '../utils/addSequenceToAction';
 import { HttpRequest } from '../models/HttpRequest';
 import { HttpResponse } from '../types/httpResponse';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { normalizeSequenceTransformers } from '../utils/normalizeSequenceTransformers';
 import { normalizeHttpRequestConfig } from '../utils/normalizeHttpRequestConfig';
+import { runMiddlewares } from '../utils/runMiddlewares';
+import { RequestMiddlewareFn, ResponseMiddlewareFn } from '../types/middleware';
 
 export function httpRequestSagaFactory(
   configuredAxiosInstance: AxiosInstance,
-  requestMiddlewares = [],
-  responseMiddlewares = [],
+  requestMiddlewares: RequestMiddlewareFn[] = [],
+  responseMiddlewares: ResponseMiddlewareFn[] = [],
 ) {
   return function* httpRequestSaga(action): SagaIterator {
     // Throw error on non-http request actions
@@ -25,9 +27,13 @@ export function httpRequestSagaFactory(
 
     // normalize action
     const {
-      meta: { httpRequest, ...otherMeta },
+      meta: { httpRequest: httpRequestMeta, ...otherMeta },
     } = action;
-    const { bailout, sequenceTransformers, ...httpRequestConfig } = httpRequest;
+    const {
+      bailout,
+      sequenceTransformers,
+      ...httpRequestConfig
+    } = httpRequestMeta;
 
     // Remove the HTTP Request meta to avoid transformation
     // inside of the sequence transformers
@@ -73,9 +79,10 @@ export function httpRequestSagaFactory(
     );
 
     // run request middleware
-    const finalRequestConfig = yield call(
+    const finalRequestConfig: AxiosRequestConfig = yield call(
       runMiddlewares,
       requestMiddlewares,
+      actionWithoutHttpRequestMeta,
       normalizedHttpRequestConfig,
     );
 
@@ -99,9 +106,10 @@ export function httpRequestSagaFactory(
     }
 
     // run response middleware
-    const finalResponse = yield call(
+    const finalResponse: HttpResponse = yield call(
       runMiddlewares,
       responseMiddlewares,
+      actionWithoutHttpRequestMeta,
       response,
     );
     const { ok } = finalResponse;
