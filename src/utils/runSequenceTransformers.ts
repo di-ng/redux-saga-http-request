@@ -1,10 +1,10 @@
+import { AnyAction } from 'redux';
+import { HttpResponse } from '../types/httpResponse';
 import {
-  SequenceTransformerSequence,
   NormalizedSequenceTransformersMap,
+  SequenceTransformerSequence,
 } from '../types/sequenceTransformers';
 import { keys } from './objectKeys';
-import { HttpResponse } from '../types/httpResponse';
-import { AnyAction } from 'redux';
 
 export function runSequenceTransformers<TState = any>(
   sequence: SequenceTransformerSequence,
@@ -17,9 +17,8 @@ export function runSequenceTransformers<TState = any>(
     sequence
   ];
 
-  const transformerArgs = sequence
-    ? [response, state, action]
-    : [state, action];
+  const transformerArgs =
+    sequence !== 'start' ? [response, state, action] : [state, action];
 
   const shouldDispatch = !!(dispatch as any)(...transformerArgs);
   const result = {

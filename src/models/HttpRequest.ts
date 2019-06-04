@@ -26,6 +26,12 @@ export class HttpRequest {
     private config: AxiosRequestConfig,
   ) {}
 
+  private createCancelToken(): CancelToken {
+    return new axios.CancelToken((cancelExecutor: Canceler) => {
+      this.cancelTokenExecutor = cancelExecutor;
+    });
+  }
+
   public cancel(reason?: string): void {
     if (this.cancelTokenExecutor) {
       this.cancelTokenExecutor(reason);
@@ -79,11 +85,5 @@ export class HttpRequest {
     }
 
     return response as HttpResponse<TResponseData>;
-  }
-
-  private createCancelToken(): CancelToken {
-    return new axios.CancelToken((cancelExecutor: Canceler) => {
-      this.cancelTokenExecutor = cancelExecutor;
-    });
   }
 }

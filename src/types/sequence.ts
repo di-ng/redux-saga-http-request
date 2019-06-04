@@ -1,3 +1,1 @@
-export type Sequence =
-  | 'start'
-  | 'done';
+export type Sequence = 'start' | 'done';

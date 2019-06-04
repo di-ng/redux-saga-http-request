@@ -1,19 +1,19 @@
-import { AnyAction } from 'redux';
 import { AxiosRequestConfig } from 'axios';
+import { AnyAction } from 'redux';
+import { SagaIterator } from 'redux-saga';
 import { HttpResponse } from './httpResponse';
-import { SagaIterator } from '@redux-saga/core';
 
-export interface MiddlewareFn<TState = any, TItem = any> {
-  (state: TState, prototypeAction: AnyAction, itemToTransform: TItem):
-    | TItem
-    | SagaIterator;
-}
+export type HttpMiddlewareFn<TState = any, TItem = any> = (
+  state: TState,
+  prototypeAction: AnyAction,
+  itemToTransform: TItem,
+) => TItem | SagaIterator;
 
-export type RequestMiddlewareFn<TState = any> = MiddlewareFn<
+export type RequestMiddlewareFn<TState = any> = HttpMiddlewareFn<
   TState,
   AxiosRequestConfig
 >;
-export type ResponseMiddlewareFn<TState = any> = MiddlewareFn<
+export type ResponseMiddlewareFn<TState = any> = HttpMiddlewareFn<
   TState,
   HttpResponse
 >;

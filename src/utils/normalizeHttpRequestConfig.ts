@@ -1,8 +1,8 @@
+import { AxiosRequestConfig } from 'axios';
 import {
   ExtendedAxiosRequestConfigOptions,
   HttpRequestConfig,
 } from '../types/requestConfig';
-import { AxiosRequestConfig } from 'axios';
 
 const EXTENDED_CONFIG_KEYS: ExtendedAxiosRequestConfigOptions[] = [
   'data',

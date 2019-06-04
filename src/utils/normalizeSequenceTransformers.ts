@@ -1,19 +1,19 @@
+import { AnyAction } from 'redux';
 import {
+  DoneSequenceTransformer,
+  DoneSequenceTransformersMap,
   NormalizedSequenceTransformersMap,
   SequenceTransformersMap,
-  DoneSequenceTransformersMap,
-  DoneSequenceTransformer,
   StartSequenceTransformer,
   StartSequenceTransformersMap,
 } from '../types/sequenceTransformers';
-import { AnyAction } from 'redux';
 import { keys } from './objectKeys';
 
 const DEFAULT_TRANSFOMERS = {
   dispatch: () => true,
-  error: (_: any, action: AnyAction) => action.error,
-  meta: (_: any, action: AnyAction) => action.meta,
-  payload: (_: any, action: AnyAction) => action.payload,
+  error: (_state: any, action: AnyAction) => action.error,
+  meta: (_state: any, action: AnyAction) => action.meta,
+  payload: (_state: any, action: AnyAction) => action.payload,
 };
 
 export function normalizeSequenceTransformers({

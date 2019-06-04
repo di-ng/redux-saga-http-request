@@ -11,7 +11,10 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test"
+    "test": "tsdx test",
+    "lint-fix": "npm run lint -- --fix",
+    "lint": "tslint --project ./tsconfig.json",
+    "pretty": "prettier"
   },
   "husky": {
     "hooks": {
@@ -39,6 +42,8 @@
     "redux-saga": "^1.0.2",
     "tsdx": "^0.5.11",
     "tslib": "^1.9.3",
+    "tslint": "^5.17.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.5",
     "utility-types": "^3.7.0"
   }

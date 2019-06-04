@@ -1,14 +1,19 @@
-import { httpRequestSagaFactory } from './httpRequestSaga';
 import { AnyAction } from 'redux';
-import { isHttpRequestAction } from '../utils/isHttpRequestAction';
+import { SagaIterator } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
-import { SagaIterator } from '@redux-saga/core';
+import { HttpRequestAction } from '../types';
+import { isHttpRequestAction } from '../utils/isHttpRequestAction';
+import { httpRequestSagaFactory } from './httpRequestSaga';
 
-export type ActionMatcher = (action: AnyAction) => boolean;
+export type HttpRequestActionMatcher = (action: HttpRequestAction) => boolean;
 
 export function* httpRequestWatcherSaga(
   httpRequestSaga: ReturnType<typeof httpRequestSagaFactory>,
-  actionPattern: ActionMatcher = isHttpRequestAction,
+  actionMatcher: HttpRequestActionMatcher = () => true,
 ): SagaIterator {
-  yield takeEvery(actionPattern, httpRequestSaga);
+  yield takeEvery(
+    (action: AnyAction) =>
+      isHttpRequestAction(action) && actionMatcher(action as HttpRequestAction),
+    httpRequestSaga,
+  );
 }

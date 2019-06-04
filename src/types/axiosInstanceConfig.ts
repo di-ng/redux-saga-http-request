@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-type AllowedAxiosInstanceConfigFields = 
+type AllowedAxiosInstanceConfigFields =
   | 'adapter'
   | 'auth'
   | 'baseURL'
@@ -22,4 +22,7 @@ type AllowedAxiosInstanceConfigFields =
   | 'xsrfCookieName'
   | 'xsrfHeaderName';
 
-export type AxiosInstanceConfig = Pick<AxiosRequestConfig, AllowedAxiosInstanceConfigFields>
+export type AxiosInstanceConfig = Pick<
+  AxiosRequestConfig,
+  AllowedAxiosInstanceConfigFields
+>;

@@ -1,9 +1,9 @@
-import { SagaIterator } from '@redux-saga/core';
 import { AnyAction } from 'redux';
+import { SagaIterator } from 'redux-saga';
 import { call, select } from 'redux-saga/effects';
-import { MiddlewareFn } from '../types/middleware';
+import { HttpMiddlewareFn } from '../types/middleware';
 
-export function* runMiddlewares<M extends MiddlewareFn>(
+export function* runMiddlewares<M extends HttpMiddlewareFn>(
   middlewareArray: M[],
   prototypeAction: AnyAction,
   itemToTransform: ReturnType<M>,

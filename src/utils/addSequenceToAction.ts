@@ -1,5 +1,5 @@
-import { Sequence } from '../types/sequence';
 import { AnyAction } from 'redux';
+import { Sequence } from '../types/sequence';
 
 export function addSequenceToAction(
   sequence: Sequence,

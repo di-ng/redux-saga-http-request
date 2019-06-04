@@ -1,16 +1,16 @@
-import { select, put, call, cancelled } from 'redux-saga/effects';
-import { isHttpRequestAction } from '../utils/isHttpRequestAction';
-import { runSequenceTransformers } from '../utils/runSequenceTransformers';
-import { SagaIterator } from '@redux-saga/core';
-import { addSequenceToAction } from '../utils/addSequenceToAction';
-import { HttpRequest } from '../models/HttpRequest';
-import { HttpResponse } from '../types/httpResponse';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { normalizeSequenceTransformers } from '../utils/normalizeSequenceTransformers';
-import { normalizeHttpRequestConfig } from '../utils/normalizeHttpRequestConfig';
-import { runMiddlewares } from '../utils/runMiddlewares';
-import { RequestMiddlewareFn, ResponseMiddlewareFn } from '../types/middleware';
+import { SagaIterator } from 'redux-saga';
+import { call, cancelled, put, select } from 'redux-saga/effects';
+import { HttpRequest } from '../models/HttpRequest';
 import { HttpRequestAction } from '../types/httpRequestAction';
+import { HttpResponse } from '../types/httpResponse';
+import { RequestMiddlewareFn, ResponseMiddlewareFn } from '../types/middleware';
+import { addSequenceToAction } from '../utils/addSequenceToAction';
+import { isHttpRequestAction } from '../utils/isHttpRequestAction';
+import { normalizeHttpRequestConfig } from '../utils/normalizeHttpRequestConfig';
+import { normalizeSequenceTransformers } from '../utils/normalizeSequenceTransformers';
+import { runMiddlewares } from '../utils/runMiddlewares';
+import { runSequenceTransformers } from '../utils/runSequenceTransformers';
 
 export function httpRequestSagaFactory(
   configuredAxiosInstance: AxiosInstance,
@@ -133,7 +133,7 @@ export function httpRequestSagaFactory(
   };
 }
 
-function* makeHttpRequest(httpRequest: HttpRequest) {
+function* makeHttpRequest(httpRequest: HttpRequest): SagaIterator {
   try {
     return yield call([httpRequest, 'send']);
   } catch (e) {
