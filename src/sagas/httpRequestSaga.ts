@@ -10,13 +10,14 @@ import { normalizeSequenceTransformers } from '../utils/normalizeSequenceTransfo
 import { normalizeHttpRequestConfig } from '../utils/normalizeHttpRequestConfig';
 import { runMiddlewares } from '../utils/runMiddlewares';
 import { RequestMiddlewareFn, ResponseMiddlewareFn } from '../types/middleware';
+import { HttpRequestAction } from '../types/httpRequestAction';
 
 export function httpRequestSagaFactory(
   configuredAxiosInstance: AxiosInstance,
   requestMiddlewares: RequestMiddlewareFn[] = [],
   responseMiddlewares: ResponseMiddlewareFn[] = [],
 ) {
-  return function* httpRequestSaga(action): SagaIterator {
+  return function* httpRequestSaga(action: HttpRequestAction): SagaIterator {
     // Throw error on non-http request actions
     if (isHttpRequestAction(action)) {
       throw new Error(
@@ -31,7 +32,7 @@ export function httpRequestSagaFactory(
     } = action;
     const {
       bailout,
-      sequenceTransformers,
+      sequences: sequenceTransformers,
       ...httpRequestConfig
     } = httpRequestMeta;
 

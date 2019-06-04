@@ -6,36 +6,40 @@ export type SequenceTransformerSequence = 'start' | 'failure' | 'success';
 
 export type StartSequenceTransformer<
   TState = any,
-  TAction = AnyAction,
-  TResult = any
+  TResult = any,
+  TAction = AnyAction
 > = (state: TState, action: TAction) => TResult;
 
 export type DoneSequenceTransformer<
-  TResponse = HttpResponse,
   TState = any,
-  TAction = AnyAction,
-  TResult = any
-> = (response: TResponse, state: TState, action: TAction) => TResult;
+  TResponseData = any,
+  TResult = any,
+  TAction = AnyAction
+> = (
+  response: HttpResponse<TResponseData>,
+  state: TState,
+  action: TAction,
+) => TResult;
 
-export interface StartSequenceTransformersMap {
-  dispatch?: StartSequenceTransformer;
-  meta?: StartSequenceTransformer;
-  payload?: StartSequenceTransformer;
+export interface StartSequenceTransformersMap<TState = any> {
+  dispatch?: StartSequenceTransformer<TState>;
+  meta?: StartSequenceTransformer<TState>;
+  payload?: StartSequenceTransformer<TState>;
 }
 
-export interface DoneSequenceTransformersMap {
-  dispatch?: DoneSequenceTransformer;
-  error?: DoneSequenceTransformer;
-  meta?: DoneSequenceTransformer;
-  payload?: DoneSequenceTransformer;
+export interface DoneSequenceTransformersMap<TState = any> {
+  dispatch?: DoneSequenceTransformer<TState>;
+  error?: DoneSequenceTransformer<TState>;
+  meta?: DoneSequenceTransformer<TState>;
+  payload?: DoneSequenceTransformer<TState>;
 }
 
-export interface SequenceTransformersMap {
-  start?: StartSequenceTransformersMap;
-  failure?: DoneSequenceTransformersMap;
-  success?: DoneSequenceTransformersMap;
+export interface SequenceTransformersMap<TState = any> {
+  start?: StartSequenceTransformersMap<TState>;
+  failure?: DoneSequenceTransformersMap<TState>;
+  success?: DoneSequenceTransformersMap<TState>;
 }
 
-export type NormalizedSequenceTransformersMap = DeepRequired<
-  SequenceTransformersMap
+export type NormalizedSequenceTransformersMap<TState = any> = DeepRequired<
+  SequenceTransformersMap<TState>
 >;
